@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -7,28 +7,39 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { LoginRequest } from "@/models/login";
-import { useLogin } from "@/hooks/use-login";
 import { useRouter } from "next/navigation";
+import { login } from "@/services/auth-service";
+import axios from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
-  const {login, loading, error } = useLogin();
-
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     const payload: LoginRequest = { username, password };
+    setLoading(true);
+    setError("");
 
-
-     try {
-      const data = await login(payload);
-      if (data) {
-        router.push("/");
-      }
+    try {
+      await login(payload);
+      router.push("/");
     } catch (err) {
-      console.error(err);
+      if (axios.isAxiosError(err) && err.response) {
+        if (err.response.status === 401) {
+          setError("Username or password wrong");
+        } else {
+          setError("An unexpected error occurred. Please try again.");
+        }
+      } else {
+        setError("Network error. Please check your connection.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,14 +84,12 @@ export default function LoginPage() {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
+              <Button disabled={loading} type="submit" className="w-full">
                 {loading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
 
-            {error && (
-              <p className="text-center text-red-500 mt-2">{error}</p>
-            )}
+            {error && <p className="text-center text-red-500 mt-2">{error}</p>}
 
             <p className="text-center mt-4">
               Don&apos;t have an account?{" "}

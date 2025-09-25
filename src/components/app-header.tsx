@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,14 +13,37 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { logout } from "@/services/auth-service";
 
 export function AppHeader() {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSignOut = () => {
-    localStorage.removeItem("token");
-    router.push("/login");
-  }
+  const handleSignOut = async () => {
+    setLoading(true);
+
+    try {
+      const res = await logout();
+      const { errors, data } = res.data;
+
+      if (errors) {
+        return;
+      }
+
+      if (data) {
+        router.push("/login");
+      }
+    } catch (error) {
+      // if (err instanceof Error) {
+      //   // setError(err.message);
+      // } else {
+      //   // setError("Login failed");
+      // }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex h-5 items-center space-x-4 text-sm ">
@@ -44,7 +67,14 @@ export function AppHeader() {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem onClick={handleSignOut}>Sign Out</DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              handleSignOut();
+            }}
+            disabled={loading ? true : false}
+          >
+            Sign Out
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -6,8 +6,12 @@ export async function registerUser(data: RegisterRequest) {
   return api.post("/auth/register", { data });
 }
 
-export const loginUser = async (
+export const login = async (
   payload: LoginRequest
 ) => {
   return api.post("/auth/login", payload);
 };
+
+export const logout = async () => {
+  return api.post("/auth/logout");
+}
