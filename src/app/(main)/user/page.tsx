@@ -6,7 +6,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 export default async function UserPage() {
   // Panggil fungsi khusus server di sini
-  const { data: users, total, totalPages } = await getServerUsers(0, 20);
+  const { data: users, total, totalPages } = await getServerUsers(0, 10);
 
   return (
     <div>
@@ -16,6 +16,7 @@ export default async function UserPage() {
           columns={columns}
           data={users}
           totalPages={totalPages}
+          initialPageSize={10}
         />
       </div>
     </div>

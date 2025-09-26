@@ -4,7 +4,7 @@ import { UserResponse } from "@/models/user";
 
 export const getServerUsers = async (page = 0, size = 20): Promise<UserResponse> => {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const cookieHeader = cookieStore.toString();
     
     const res = await api.get("/users", {
