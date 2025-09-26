@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ColumnDef,
   useReactTable,
@@ -16,8 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getUsers } from "@/services/user-service";
-import { User } from "@/models/user";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -27,31 +24,45 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-interface DataTableProps {
-  columns: ColumnDef<User, unknown>[];
-  data: User[];
+interface DataTableProps<T> {
+  columns: ColumnDef<T, unknown>[];
+  data: T[];
   totalPages?: number;
   initialPageSize?: number;
+  fetchData: (
+    pageIndex: number,
+    pageSize: number
+  ) => Promise<{ data: T[]; totalPages: number }>;
 }
 
-export function DataTable({
+export function DataTable<T>({
   columns,
   data,
   totalPages = 1,
   initialPageSize = 10,
-}: DataTableProps) {
+  fetchData,
+}: DataTableProps<T>) {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const [tableData, setTableData] = useState<User[]>(data);
+  const [tableData, setTableData] = useState<T[]>(() => Array.isArray(data) ? data : []);
 
+
+  const [localTotalPages, setLocalTotalPages] = useState(totalPages);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+
+  // useEffect(() => {
+  //   if (isFirstLoad) {
+  //     setIsFirstLoad(false);
+  //     return;
+  //   }
+  //   fetchData(pageIndex, pageSize).then(setTableData);
+  // }, [pageIndex, pageSize, fetchData]);
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await getUsers(pageIndex, pageSize);
+    fetchData(pageIndex, pageSize).then((res) => {
       setTableData(res.data);
-    };
-    fetchData();
-    console.log(pageIndex, pageSize);
-  }, [pageIndex, pageSize]);
+      setLocalTotalPages(res.totalPages);
+    });
+  }, [pageIndex, pageSize, fetchData]);
 
   const table = useReactTable({
     data: tableData,
@@ -102,6 +113,7 @@ export function DataTable({
           </TableBody>
         </Table>
       </div>
+
       <div className="flex flex-wrap items-center justify-between gap-4 py-4">
         <div className="flex items-center gap-2">
           <span>Rows per page:</span>
@@ -112,7 +124,7 @@ export function DataTable({
             }}
             defaultValue={pageSize.toString()}
           >
-            <SelectTrigger className="w-20">
+            <SelectTrigger className="w-20 cursor-pointer">
               <SelectValue placeholder={pageSize} />
             </SelectTrigger>
             <SelectContent>
@@ -128,15 +140,17 @@ export function DataTable({
           <Button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            className="cursor-pointer"
           >
             Previous
           </Button>
           <span>
-            Page {pageIndex + 1} of {totalPages}
+            Page {pageIndex + 1} of {localTotalPages}
           </span>
           <Button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            className="cursor-pointer"
           >
             Next
           </Button>
