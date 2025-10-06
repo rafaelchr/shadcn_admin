@@ -48,15 +48,7 @@ export function DataTable<T>({
 
 
   const [localTotalPages, setLocalTotalPages] = useState(totalPages);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  // useEffect(() => {
-  //   if (isFirstLoad) {
-  //     setIsFirstLoad(false);
-  //     return;
-  //   }
-  //   fetchData(pageIndex, pageSize).then(setTableData);
-  // }, [pageIndex, pageSize, fetchData]);
   useEffect(() => {
     fetchData(pageIndex, pageSize).then((res) => {
       setTableData(res.data);
@@ -67,7 +59,7 @@ export function DataTable<T>({
   const table = useReactTable({
     data: tableData,
     columns,
-    pageCount: totalPages,
+    pageCount: localTotalPages,
     state: {
       pagination: { pageIndex, pageSize },
     },

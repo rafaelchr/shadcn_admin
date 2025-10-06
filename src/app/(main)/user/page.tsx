@@ -1,16 +1,17 @@
-// app/users/page.tsx
-import { getServerUsers } from "@/services/server-user-service";
-import { DataTableUser } from "./datatable-user";
+import { getServerUsers } from "@/services/server-service";
+import { DataTableUser } from "./data-table-user";
 
-export default async function UserPage() {
+const UserPage = async () => {
   const { data: users, totalPages } = await getServerUsers(0, 10);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <h1 className="text-xl font-medium uppercase">User Management</h1>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto">
         <DataTableUser initialData={users} totalPages={totalPages} />
       </div>
     </div>
   );
 }
+
+export default UserPage;

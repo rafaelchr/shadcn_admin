@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="flex w-full min-h-screen">
@@ -55,7 +55,7 @@ export default function RegisterPage() {
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="text-teal-600 hover:underline font-semibold"
+                className="hover:underline font-semibold"
               >
                 Login
               </Link>
@@ -66,3 +66,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+export default RegisterPage;

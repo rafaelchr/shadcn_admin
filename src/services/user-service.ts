@@ -11,7 +11,6 @@ export const getUsers = async (
       params: { page, size },
     });
 
-
     return res.data.data as UserResponse;
   } catch (error) {
     console.error("Failed to fetch users:", error);

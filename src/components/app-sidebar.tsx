@@ -1,4 +1,4 @@
-import { Home, Users } from "lucide-react";
+import { Home, Users, Film } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -25,11 +25,16 @@ const items = [
     url: "/user",
     icon: Users,
   },
+  {
+    title: "Film",
+    url: "/film",
+    icon: Film
+  }
 ];
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar variant="floating">
       <SidebarContent>
         <SidebarGroup>
           <Button variant="ghost" className="py-6 mb-2">

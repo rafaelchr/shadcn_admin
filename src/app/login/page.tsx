@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { login } from "@/services/auth-service";
 import axios from "axios";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -95,7 +95,7 @@ export default function LoginPage() {
               Don&apos;t have an account?{" "}
               <Link
                 href="/register"
-                className="text-teal-600 hover:underline font-semibold"
+                className="hover:underline font-semibold"
               >
                 Register
               </Link>
@@ -106,3 +106,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginPage;
