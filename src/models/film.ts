@@ -2,6 +2,8 @@ export type Film = {
   id: number;
   title: string;
   description: string;
+  imagePath: string;
+  url: string;
   userId: number;
   username: string;
 }

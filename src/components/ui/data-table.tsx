@@ -6,6 +6,7 @@ import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
+  flexRender
 } from "@tanstack/react-table";
 import {
   Table,
@@ -97,7 +98,8 @@ export function DataTable<T>({
               <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {cell.renderValue() as React.ReactNode}
+                    {/* {cell.renderValue() as React.ReactNode} */}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
               </TableRow>

@@ -1,9 +1,9 @@
 "use client";
 
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "./columns";
 import { Film } from "@/models/film";
 import { getFilms } from "@/services/film-service";
+import { columns } from "./columns";
 
 export function DataTableFilm({
   initialData,

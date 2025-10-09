@@ -1,67 +1,26 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
+import Image from "next/image";
 
-interface User {
-  id: number;
-  username: string;
-  role: string; // sesuaikan dengan respons API kamu
-}
-
-const Page = () => {
-  const [users, setUsers] = useState<User[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch('http://localhost:8080/api/users', {
-          method: 'GET',
-          credentials: 'include', // penting supaya cookie JWT ikut
-        })
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
-        }
-
-        const json = await res.json()
-
-        if (json.errors) {
-          throw new Error(json.errors)
-        }
-
-        // sesuaikan struktur respons API kamu
-        setUsers(json.data.data)
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError('Unknown error')
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchUsers()
-  }, [])
-
-  if (loading) return <div>Loading…</div>
-  if (error) return <div>Error: {error}</div>
-
+export default function ImageTestPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold">Users</h1>
-      <ul className="mt-4 space-y-2">
-        {users.map((user) => (
-          <li key={user.username} className="p-2 border rounded">
-            <div className="font-semibold">{user.username}</div>
-            <div className="text-sm text-gray-600">{user.role}</div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-8">
+      <h1 className="text-2xl font-semibold mb-6">Image Test Page</h1>
 
-export default Page
+      <div className="rounded-xl overflow-hidden shadow-lg border border-gray-300 bg-white p-4">
+        <Image
+          src="/images/profile.png"
+          alt="Test Image"
+          width={236}
+          height={236}
+          className="rounded-lg object-cover"
+          priority={true}
+        />
+      </div>
+
+      <p className="mt-4 text-gray-700 text-sm">
+        Jika gambar muncul, berarti konfigurasi Next Image sudah benar ✅
+      </p>
+    </div>
+  );
+}

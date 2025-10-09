@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
   const jwt = request.cookies.get('jwt')?.value;
   const { pathname } = request.nextUrl;
 
-  const publicPaths = ['/login', '/register'];
+  const publicPaths = ['/login', '/register', '/testing'];
 
   if (!jwt && !publicPaths.includes(pathname)) {
     return NextResponse.redirect(new URL('/login', request.url));
@@ -19,6 +19,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|api).*)',
+     "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\.[^/]+$).*)",
   ],
 };

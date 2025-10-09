@@ -7,7 +7,7 @@ const FilmPage = async () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <h1 className="text-xl font-medium uppercase">Film Management</h1>
         <CreateFilmDialog />
       </div>
