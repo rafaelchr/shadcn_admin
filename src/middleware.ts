@@ -4,7 +4,7 @@ export function middleware(request: NextRequest) {
   const jwt = request.cookies.get('jwt')?.value;
   const { pathname } = request.nextUrl;
 
-  const publicPaths = ['/login', '/register', '/testing'];
+  const publicPaths = ['/login', '/register', '/testing', '/dashboard'];
 
   if (!jwt && !publicPaths.includes(pathname)) {
     return NextResponse.redirect(new URL('/login', request.url));
