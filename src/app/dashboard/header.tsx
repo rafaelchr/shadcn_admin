@@ -12,26 +12,26 @@ const Header = () => {
     { name: "Home", href: "/dashboard" },
     { name: "Top Rated", href: "#" },
     { name: "Genres", href: "#" },
-    { name: "Profile", href: "#" },
+    { name: "Login", href: "/login" },
   ];
 
   return (
     <header
       className={
         inter.className +
-        ` text-black sticky top-0 z-50 py-4 px-15 `
+        ` text-[#e5e3d4] py-4`
       }
     >
-      <div className="border-b-3 border-black flex justify-between pb-2">
+      <div className="border-b-3 border-[#c3d243] flex justify-between pb-2">
         <div
-          className={ibmPlexSerif.className + " text-xl font-"}
+          className={ibmPlexSerif.className + " text-xl"}
           style={{ lineHeight: 1 }}
         >
           FILM.IO
         </div>
         <div className="flex gap-10">
           {navLinks.map((item) => (
-            <Link key={item.name} href={item.href} className="text-sm">{item.name}</Link>
+            <Link key={item.name} href={item.href} className="text-sm uppercase hover:underline">{item.name}</Link>
           ))}
         </div>
       </div>
