@@ -16,22 +16,27 @@ const Header = () => {
   ];
 
   return (
-    <header
-      className={
-        inter.className +
-        ` text-[#e5e3d4] py-4`
-      }
-    >
-      <div className="border-b-3 border-[#c3d243] flex justify-between pb-2">
+    <header className={inter.className + ` text-[#e5e3d4] py-4`}>
+      <div className="flex justify-between font-bold py-1 px-1">
         <div
-          className={ibmPlexSerif.className + " text-xl"}
+          className={
+            ibmPlexSerif.className +
+            " text-[#2D2D2F] text-xl bg-[#e5e3d4] px-4 py-2 rounded-sm"
+          }
           style={{ lineHeight: 1 }}
         >
           FILM.IO
         </div>
-        <div className="flex gap-10">
+
+        <div className="flex gap-10 items-center">
           {navLinks.map((item) => (
-            <Link key={item.name} href={item.href} className="text-sm uppercase hover:underline">{item.name}</Link>
+            <Link
+              key={item.name}
+              href={item.href}
+              className="text-sm uppercase font-semibold hover:underline"
+            >
+              {item.name}
+            </Link>
           ))}
         </div>
       </div>

@@ -37,8 +37,8 @@ const MovieCard = ({
 
   return (
     <div className="group bg-[#e5e3d4] hover:shadow-xl/30 overflow-hidden duration-500 ease-in-out rounded-xl">
-      <div className="flex">
-        <div className="w-2/3 h-60 overflow-hidden">
+      <div className="flex flex-col xl:flex-row">
+        <div className="w-full xl:w-2/3 aspect-video overflow-hidden">
           <Image
             src={imgSrc}
             alt={title}
@@ -50,7 +50,7 @@ const MovieCard = ({
           />
         </div>
 
-        <div className="w-1/3">
+        <div className="w-full xl:w-1/3">
           <div className="p-4 flex flex-col justify-between h-full">
             <h3
               className="text-xl font-bold text-[#2D2D2F] mb-2 h-auto"
@@ -66,7 +66,7 @@ const MovieCard = ({
             </div>
 
             <div
-              className="flex items-center p-2 rounded-sm justify-between h-auto bg-[#2D2D2F]"
+              className="flex items-center py-2 px-3 mt-4 xl:mt-0 rounded-sm justify-between h-auto bg-[#2D2D2F]"
               style={{ lineHeight: 0 }}
             >
               <div className="flex space-x-1">
